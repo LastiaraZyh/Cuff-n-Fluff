@@ -41,7 +41,7 @@ public class Penguin {
     }
 }
 
-class Interrogator {
+public class Interrogator {
     private String name;
     private String tactic;
 
