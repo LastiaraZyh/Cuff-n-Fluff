@@ -20,7 +20,7 @@ public class Penguin {
         return name;
     }
 
-    public void setName(String name) {  // 添加 setName 方法
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -48,7 +48,7 @@ class Interrogator {
     public static final String OFFER_DEAL = "O";
     public static final String THREATEN = "T";
 
-    // 构造器，只接受 name 参数
+    // 将构造器的访问修饰符更改为 public
     public Interrogator(String name) {
         this.name = name;
         this.tactic = "NONE";
@@ -59,7 +59,7 @@ class Interrogator {
         return name;
     }
 
-    public void setName(String name) {  // 添加 setName 方法
+    public void setName(String name) {
         this.name = name;
     }
 
