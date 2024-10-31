@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 
+import java.util.Random;
+import java.util.Scanner;
+
 public class Penguin {
     private String name;
     private int prisonTime;
@@ -112,21 +115,21 @@ class InterrogationRoom {
         Penguin alice = new Penguin("Alice");
         Penguin bob = new Penguin("Bob");
 
-        out.println("Welcome to the Cuff 'n' Fluff");
+        System.out.println("Welcome to the Cuff 'n' Fluff");
 
         // Ask Alice's choice
         String choiceAlice;
         do {
-            out.println("Do you want to betray (B) Bob or be silent (S)?");
+            System.out.println("Do you want to betray (B) Bob or be silent (S)?");
             choiceAlice = scanner.nextLine();
         } while (!choiceAlice.equals("B") && !choiceAlice.equals("S"));
 
         alice.setChoice(choiceAlice);
-        out.println("Alice chose to " + turnChoiceIntoSentence(choiceAlice) + ": " + choiceAlice);
+        System.out.println("Alice chose to " + turnChoiceIntoSentence(choiceAlice) + ": " + choiceAlice);
 
         // Bob makes a random choice
         bob.setChoice(generateRandomChoice());
-        out.println("Bob chose to " + turnChoiceIntoSentence(bob.getChoice()) + ": " + bob.getChoice());
+        System.out.println("Bob chose to " + turnChoiceIntoSentence(bob.getChoice()) + ": " + bob.getChoice());
 
         // Interrogator interrogates Alice and Bob
         Interrogator interrogator = new Interrogator("Sherlock Holmes");
@@ -134,15 +137,15 @@ class InterrogationRoom {
         InterrogationRoom interrogationRoom = new InterrogationRoom(interrogator);
         interrogationRoom.interrogate(alice, bob);
 
-        out.println("Alice gets " + alice.getPrisonTime() + " years and Bob gets " + bob.getPrisonTime() + " years in prison.");
+        System.out.println("Alice gets " + alice.getPrisonTime() + " years and Bob gets " + bob.getPrisonTime() + " years in prison.");
 
         // Interrogator decides to employ tactics if needed
         if (!(alice.getChoice().equals("B") && bob.getChoice().equals("B"))) {
-            out.println("Interrogator was not happy with the result and decides to use tactics.");
+            System.out.println("Interrogator was not happy with the result and decides to use tactics.");
 
             String changeChoice;
             do {
-                out.println("Would you like to change your choice? (Y/N)");
+                System.out.println("Would you like to change your choice? (Y/N)");
                 changeChoice = scanner.nextLine();
             } while (!changeChoice.equals("Y") && !changeChoice.equals("N"));
 
@@ -154,10 +157,10 @@ class InterrogationRoom {
             interrogationRoom.interrogate(alice, bob);
             interrogationRoom.interrogatorUsesTactics(alice, bob);
 
-            out.println("After the interrogation with tactics, Alice gets " + alice.getPrisonTime() + " years and Bob gets " + bob.getPrisonTime() + " years in prison.");
-            out.println("Interrogator " + interrogator.getName() + " employs " + (interrogator.getTactic().equals(Interrogator.OFFER_DEAL) ? "offer deal" : "threaten") + " tactic.");
+            System.out.println("After the interrogation with tactics, Alice gets " + alice.getPrisonTime() + " years and Bob gets " + bob.getPrisonTime() + " years in prison.");
+            System.out.println("Interrogator " + interrogator.getName() + " employs " + (interrogator.getTactic().equals(Interrogator.OFFER_DEAL) ? "offer deal" : "threaten") + " tactic.");
         } else {
-            out.println("Interrogator is happy with the result and decides not to use tactics.");
+            System.out.println("Interrogator is happy with the result and decides not to use tactics.");
         }
     }
 
@@ -178,6 +181,3 @@ class InterrogationRoom {
         return interrogationStyles[random.nextInt(2)];
     }
 }
-
-
-
