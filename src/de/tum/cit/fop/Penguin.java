@@ -196,6 +196,8 @@ class InterrogationRoom {
         return random.nextInt(2) == 0 ? "B" : "S";
     }
 
+
+
     private static String generateRandomInterrogationStyle() {
         String[] interrogationStyles = {Interrogator.OFFER_DEAL, Interrogator.THREATEN};
         return interrogationStyles[random.nextInt(2)];
