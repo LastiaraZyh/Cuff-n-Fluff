@@ -41,7 +41,7 @@ public class Penguin {
     }
 }
 
-public class Interrogator {
+class Interrogator {
     private String name;
     private String tactic;
 
@@ -124,7 +124,6 @@ class InterrogationRoom {
             bob.setPrisonTime(Math.max(0, bob.getPrisonTime() + adjustment));
         }
     }
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Penguin alice = new Penguin("Alice");
