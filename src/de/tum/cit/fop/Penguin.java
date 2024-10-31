@@ -74,47 +74,6 @@ class Interrogator {
         this.tactic = tactic;
     }
 }
-class Interrogator {
-    private String name;
-    private String tactic;
-
-    public static final String OFFER_DEAL = "O";
-    public static final String THREATEN = "T";
-
-    // 构造器，只接受 name 参数
-    public Interrogator(String name) {
-        this.name = name;
-        this.tactic = "NONE";
-    }
-
-    // Getter 和 Setter 方法
-    public String getName() {
-        return name;
-    }
-
-    public String getTactic() {
-        return tactic;
-    }
-
-    public void setTactic(String tactic) {
-        this.tactic = tactic;
-    }
-}
-
-class InterrogationRoom {
-    private final Interrogator interrogator;
-    private static final Random random = new Random();
-
-    // 构造器，接受 Interrogator 对象作为参数
-    public InterrogationRoom(Interrogator interrogator) {
-        this.interrogator = interrogator;
-    }
-
-    // Getter 方法
-    public Interrogator getInterrogator() {
-        return interrogator;
-    }
-
     // Interrogate 方法
     public void interrogate(Penguin alice, Penguin bob) {
         String aliceChoice = alice.getChoice();
