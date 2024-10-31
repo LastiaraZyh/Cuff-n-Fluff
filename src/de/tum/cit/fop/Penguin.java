@@ -1,7 +1,7 @@
 package de.tum.cit.fop;
+
 import java.util.Random;
 import java.util.Scanner;
-
 
 public class Penguin {
     private String name;
@@ -20,7 +20,7 @@ public class Penguin {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) {  // 添加 setName 方法
         this.name = name;
     }
 
@@ -59,7 +59,7 @@ class Interrogator {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) {  // 添加 setName 方法
         this.name = name;
     }
 
@@ -109,22 +109,19 @@ class InterrogationRoom {
 
     // Interrogator uses tactics to potentially change the prison time
     public void interrogatorUsesTactics(Penguin alice, Penguin bob) {
-        if (interrogator.getTactic().equals(Interrogator.OFFER_DEAL)) {
-            // 若策略是 Offer Deal，选择背叛的企鹅减少 1 年刑期
-            if (alice.getChoice().equals("B")) {
-                alice.setPrisonTime(Math.max(0, alice.getPrisonTime() - 1));
-            }
-            if (bob.getChoice().equals("B")) {
-                bob.setPrisonTime(Math.max(0, bob.getPrisonTime() - 1));
-            }
-        } else if (interrogator.getTactic().equals(Interrogator.THREATEN)) {
-            // 若策略是 Threaten，选择保持沉默的企鹅增加 1 年刑期
-            if (alice.getChoice().equals("S")) {
-                alice.setPrisonTime(alice.getPrisonTime() + 1);
-            }
-            if (bob.getChoice().equals("S")) {
-                bob.setPrisonTime(bob.getPrisonTime() + 1);
-            }
+        int adjustment = interrogator.getTactic().equals(Interrogator.OFFER_DEAL) ? -1 : 1;
+
+        // 对于威胁策略，保持沉默的会增加监禁时间
+        if (alice.getChoice().equals("S")) {
+            alice.setPrisonTime(Math.max(0, alice.getPrisonTime() + 1)); // Silent +1 year for threaten
+        } else {
+            alice.setPrisonTime(Math.max(0, alice.getPrisonTime() + adjustment));
+        }
+
+        if (bob.getChoice().equals("S")) {
+            bob.setPrisonTime(Math.max(0, bob.getPrisonTime() + 1)); // Silent +1 year for threaten
+        } else {
+            bob.setPrisonTime(Math.max(0, bob.getPrisonTime() + adjustment));
         }
     }
 
@@ -135,7 +132,7 @@ class InterrogationRoom {
 
         System.out.println("Welcome to the Cuff 'n' Fluff");
 
-        // Ask Alice's choice
+        // Part 1: Alice makes her choice
         String choiceAlice;
         do {
             System.out.println("Do you want to betray (B) Bob or be silent (S)?");
@@ -155,12 +152,13 @@ class InterrogationRoom {
         InterrogationRoom interrogationRoom = new InterrogationRoom(interrogator);
         interrogationRoom.interrogate(alice, bob);
 
-        System.out.println("Alice gets " + alice.getPrisonTime() + " years and Bob gets " + bob.getPrisonTime() + " years in prison.");
+        System.out.println("Alice gets " + alice.getPrisonTime() + " years, and Bob gets " + bob.getPrisonTime() + " years in prison.");
 
-        // Interrogator decides to employ tactics if needed
+        // Part 2: Interrogator decides to employ tactics if needed
         if (!(alice.getChoice().equals("B") && bob.getChoice().equals("B"))) {
-            System.out.println("Interrogator was not happy with the result and decides to use tactics.");
+            System.out.println("The interrogator was not so happy with the result and decides to use tactics.");
 
+            // Ask Alice if she wants to change her choice
             String changeChoice;
             do {
                 System.out.println("Would you like to change your choice? (Y/N)");
@@ -168,34 +166,40 @@ class InterrogationRoom {
             } while (!changeChoice.equals("Y") && !changeChoice.equals("N"));
 
             if (changeChoice.equals("Y")) {
-                alice.setChoice(changeChoiceIfYes(choiceAlice));
+                // Toggle Alice's choice
+                alice.setChoice(alice.getChoice().equals("B") ? "S" : "B");
+                System.out.println("Alice chose to " + turnChoiceIntoSentence(alice.getChoice()) + ": " + alice.getChoice());
             }
 
             bob.setChoice(generateRandomChoice());
+            System.out.println("Bob chose to " + turnChoiceIntoSentence(bob.getChoice()) + ": " + bob.getChoice());
+
             interrogationRoom.interrogate(alice, bob);
             interrogationRoom.interrogatorUsesTactics(alice, bob);
 
-            System.out.println("After the interrogation with tactics, Alice gets " + alice.getPrisonTime() + " years and Bob gets " + bob.getPrisonTime() + " years in prison.");
             System.out.println("Interrogator " + interrogator.getName() + " employs " + (interrogator.getTactic().equals(Interrogator.OFFER_DEAL) ? "offer deal" : "threaten") + " tactic.");
+            System.out.println("After the interrogation with tactics, Alice gets " + alice.getPrisonTime() + " years, and Bob gets " + bob.getPrisonTime() + " years in prison.");
         } else {
             System.out.println("Interrogator is happy with the result and decides not to use tactics.");
         }
     }
 
+    // Helper method to describe choice as text
     private static String turnChoiceIntoSentence(String choice) {
         return choice.equals("B") ? "betray" : "be silent";
     }
 
-    private static String changeChoiceIfYes(String choiceAlice) {
-        return choiceAlice.equals("B") ? "S" : "B";
-    }
-
+    // Random choice generator for Bob
     private static String generateRandomChoice() {
         return random.nextInt(2) == 0 ? "B" : "S";
     }
 
+    // Generate random interrogation style
     private static String generateRandomInterrogationStyle() {
         String[] interrogationStyles = {Interrogator.OFFER_DEAL, Interrogator.THREATEN};
         return interrogationStyles[random.nextInt(2)];
     }
 }
+
+
+
