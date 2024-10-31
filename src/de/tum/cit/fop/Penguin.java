@@ -19,7 +19,7 @@ public class Penguin {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) {  // 添加 setName 方法
         this.name = name;
     }
 
@@ -40,7 +40,7 @@ public class Penguin {
     }
 }
 
-public class Interrogator {
+class Interrogator {
     private String name;
     private String tactic;
 
@@ -58,7 +58,7 @@ public class Interrogator {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) {  // 添加 setName 方法
         this.name = name;
     }
 
@@ -71,7 +71,7 @@ public class Interrogator {
     }
 }
 
-public class InterrogationRoom {
+class InterrogationRoom {
     private final Interrogator interrogator;
     private static final Random random = new Random();
 
@@ -108,23 +108,9 @@ public class InterrogationRoom {
 
     // Interrogator uses tactics to potentially change the prison time
     public void interrogatorUsesTactics(Penguin alice, Penguin bob) {
-        if (interrogator.getTactic().equals(Interrogator.OFFER_DEAL)) {
-            // Both confess (B) reduce their prison time by 1
-            if (alice.getChoice().equals("B")) {
-                alice.setPrisonTime(Math.max(0, alice.getPrisonTime() - 1)); // Reduce by 1
-            }
-            if (bob.getChoice().equals("B")) {
-                bob.setPrisonTime(Math.max(0, bob.getPrisonTime() - 1)); // Reduce by 1
-            }
-        } else if (interrogator.getTactic().equals(Interrogator.THREATEN)) {
-            // Both remain silent (S) add 1 year to their prison time
-            if (alice.getChoice().equals("S")) {
-                alice.setPrisonTime(alice.getPrisonTime() + 1); // Add 1
-            }
-            if (bob.getChoice().equals("S")) {
-                bob.setPrisonTime(bob.getPrisonTime() + 1); // Add 1
-            }
-        }
+        int adjustment = interrogator.getTactic().equals(Interrogator.OFFER_DEAL) ? -1 : 1;
+        alice.setPrisonTime(Math.max(0, alice.getPrisonTime() + adjustment));
+        bob.setPrisonTime(Math.max(0, bob.getPrisonTime() + adjustment));
     }
 
     public static void main(String[] args) {
