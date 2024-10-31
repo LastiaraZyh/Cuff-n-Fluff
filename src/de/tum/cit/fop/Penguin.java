@@ -2,6 +2,7 @@ package de.tum.cit.fop;
 import java.util.Random;
 import java.util.Scanner;
 
+
 public class Penguin {
     private String name;
     private int prisonTime;
@@ -19,7 +20,7 @@ public class Penguin {
         return name;
     }
 
-    public void setName(String name) {  // 添加 setName 方法
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -58,7 +59,7 @@ class Interrogator {
         return name;
     }
 
-    public void setName(String name) {  // 添加 setName 方法
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -108,9 +109,23 @@ class InterrogationRoom {
 
     // Interrogator uses tactics to potentially change the prison time
     public void interrogatorUsesTactics(Penguin alice, Penguin bob) {
-        int adjustment = interrogator.getTactic().equals(Interrogator.OFFER_DEAL) ? -1 : 1;
-        alice.setPrisonTime(Math.max(0, alice.getPrisonTime() + adjustment));
-        bob.setPrisonTime(Math.max(0, bob.getPrisonTime() + adjustment));
+        if (interrogator.getTactic().equals(Interrogator.OFFER_DEAL)) {
+            // 若策略是 Offer Deal，选择背叛的企鹅减少 1 年刑期
+            if (alice.getChoice().equals("B")) {
+                alice.setPrisonTime(Math.max(0, alice.getPrisonTime() - 1));
+            }
+            if (bob.getChoice().equals("B")) {
+                bob.setPrisonTime(Math.max(0, bob.getPrisonTime() - 1));
+            }
+        } else if (interrogator.getTactic().equals(Interrogator.THREATEN)) {
+            // 若策略是 Threaten，选择保持沉默的企鹅增加 1 年刑期
+            if (alice.getChoice().equals("S")) {
+                alice.setPrisonTime(alice.getPrisonTime() + 1);
+            }
+            if (bob.getChoice().equals("S")) {
+                bob.setPrisonTime(bob.getPrisonTime() + 1);
+            }
+        }
     }
 
     public static void main(String[] args) {
