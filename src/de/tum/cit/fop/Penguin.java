@@ -2,11 +2,6 @@ package de.tum.cit.fop;
 import java.util.Random;
 import java.util.Scanner;
 
-import static java.lang.System.out;
-
-import java.util.Random;
-import java.util.Scanner;
-
 public class Penguin {
     private String name;
     private int prisonTime;
@@ -24,7 +19,7 @@ public class Penguin {
         return name;
     }
 
-    public void setName(String name) {  // 添加 setName 方法
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -44,7 +39,8 @@ public class Penguin {
         this.choice = choice;
     }
 }
-class Interrogator {
+
+public class Interrogator {
     private String name;
     private String tactic;
 
@@ -62,7 +58,7 @@ class Interrogator {
         return name;
     }
 
-    public void setName(String name) {  // 添加 setName 方法
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -74,6 +70,21 @@ class Interrogator {
         this.tactic = tactic;
     }
 }
+
+public class InterrogationRoom {
+    private final Interrogator interrogator;
+    private static final Random random = new Random();
+
+    // 构造器，接受 Interrogator 对象作为参数
+    public InterrogationRoom(Interrogator interrogator) {
+        this.interrogator = interrogator;
+    }
+
+    // Getter 方法
+    public Interrogator getInterrogator() {
+        return interrogator;
+    }
+
     // Interrogate 方法
     public void interrogate(Penguin alice, Penguin bob) {
         String aliceChoice = alice.getChoice();
@@ -97,9 +108,23 @@ class Interrogator {
 
     // Interrogator uses tactics to potentially change the prison time
     public void interrogatorUsesTactics(Penguin alice, Penguin bob) {
-        int adjustment = interrogator.getTactic().equals(Interrogator.OFFER_DEAL) ? -1 : 1;
-        alice.setPrisonTime(Math.max(0, alice.getPrisonTime() + adjustment));
-        bob.setPrisonTime(Math.max(0, bob.getPrisonTime() + adjustment));
+        if (interrogator.getTactic().equals(Interrogator.OFFER_DEAL)) {
+            // Both confess (B) reduce their prison time by 1
+            if (alice.getChoice().equals("B")) {
+                alice.setPrisonTime(Math.max(0, alice.getPrisonTime() - 1)); // Reduce by 1
+            }
+            if (bob.getChoice().equals("B")) {
+                bob.setPrisonTime(Math.max(0, bob.getPrisonTime() - 1)); // Reduce by 1
+            }
+        } else if (interrogator.getTactic().equals(Interrogator.THREATEN)) {
+            // Both remain silent (S) add 1 year to their prison time
+            if (alice.getChoice().equals("S")) {
+                alice.setPrisonTime(alice.getPrisonTime() + 1); // Add 1
+            }
+            if (bob.getChoice().equals("S")) {
+                bob.setPrisonTime(bob.getPrisonTime() + 1); // Add 1
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -173,3 +198,4 @@ class Interrogator {
         return interrogationStyles[random.nextInt(2)];
     }
 }
+
