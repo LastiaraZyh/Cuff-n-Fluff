@@ -7,6 +7,9 @@ import static java.lang.System.out;
 import java.util.Random;
 import java.util.Scanner;
 
+import java.util.Random;
+import java.util.Scanner;
+
 public class Penguin {
     private String name;
     private int prisonTime;
@@ -44,6 +47,7 @@ public class Penguin {
         this.choice = choice;
     }
 }
+
 class Interrogator {
     private String name;
     private String tactic;
@@ -74,6 +78,21 @@ class Interrogator {
         this.tactic = tactic;
     }
 }
+
+class InterrogationRoom {
+    private final Interrogator interrogator;
+    private static final Random random = new Random();
+
+    // 构造器，接受 Interrogator 对象作为参数
+    public InterrogationRoom(Interrogator interrogator) {
+        this.interrogator = interrogator;
+    }
+
+    // Getter 方法
+    public Interrogator getInterrogator() {
+        return interrogator;
+    }
+
     // Interrogate 方法
     public void interrogate(Penguin alice, Penguin bob) {
         String aliceChoice = alice.getChoice();
