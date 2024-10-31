@@ -93,13 +93,13 @@ class InterrogationRoom {
 
         // 根据 Alice 和 Bob 的选择设置监禁时间
         if (aliceChoice.equals("B") && bobChoice.equals("B")) {
-            alice.setPrisonTime(5);
-            bob.setPrisonTime(5);
+            alice.setPrisonTime(2);
+            bob.setPrisonTime(2);
         } else if (aliceChoice.equals("B") && bobChoice.equals("S")) {
             alice.setPrisonTime(0);
-            bob.setPrisonTime(10);
+            bob.setPrisonTime(3);
         } else if (aliceChoice.equals("S") && bobChoice.equals("B")) {
-            alice.setPrisonTime(10);
+            alice.setPrisonTime(3);
             bob.setPrisonTime(0);
         } else {
             alice.setPrisonTime(1);
