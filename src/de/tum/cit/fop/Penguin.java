@@ -1,10 +1,4 @@
-
-
-共享
-
-
-        您说：
-        package de.tum.cit.fop;
+package de.tum.cit.fop;
 import java.util.Random;
 import java.util.Scanner;
 
