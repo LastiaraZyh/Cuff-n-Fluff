@@ -24,6 +24,10 @@ public class Penguin {
         return name;
     }
 
+    public void setName(String name) {  // 添加 setName 方法
+        this.name = name;
+    }
+
     public int getPrisonTime() {
         return prisonTime;
     }
