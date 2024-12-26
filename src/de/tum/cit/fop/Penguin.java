@@ -5,6 +5,7 @@ public class Penguin {
     private int prisonTime;
     private String choice;
 
+
     public Penguin(String name) {
         this.name = name;
         this.prisonTime = 0;
